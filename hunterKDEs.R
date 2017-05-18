@@ -38,14 +38,16 @@ elk$Date <- as.Date(elk$Date, "%Y-%m-%d")
 ##SEASONAL KDES BY SEX
 
 # AnimalID by DeviceID
-unique(elk[elk$DeviceID == 34918, 1])
-
-indiv <- subset(elk, AnimalID == 140630)
+unique(elk[elk$DeviceID == 34914, 1])
+indiv <- subset(elk, AnimalID == 140380) 
 xy <- data.frame("x"=indiv$Long,"y"=indiv$Lat)
 ll <- SpatialPointsDataFrame(xy, indiv, proj4string = latlong)
+
+
+
 kde <- kernelUD(ll, h="href", grid = 5000)
 raster <- raster(kde)
-writeRaster(raster, paste("KDE140630"), format="GTiff", overwrite=TRUE)
+writeRaster(raster, paste("KDE140380"), format="GTiff", overwrite=TRUE)
 
 
 ##SEASONAL KDES FOR PRESENTATION EXAMPLE
