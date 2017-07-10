@@ -1,0 +1,7 @@
+seasonal kdes for liz
+quicknotes
+
+created rasters in r; imported to arcmap
+removed background values
+used raster calulator to remove bottom 10% of values (spatial analyst > map algebra)
+	SetNull("calving-female.tif" <= 0.411354e-009, "calving-female.tif")
