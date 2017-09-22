@@ -7,16 +7,15 @@
 
 wd_workcomp <- "C:\\Users\\kristin.barker\\Documents\\GitHub\\KDEs"
 wd_laptop <- "C:\\Users\\kjbark3r\\Documents\\GitHub\\KDEs"
-	if (file.exists(wd_workcomp)) {
-	  setwd(wd_workcomp)
-	} else {
-	  if(file.exists(wd_laptop)) {
-		setwd(wd_laptop)
-	  } else {
-		  cat("Are you SURE you got that file path right?\n")
-		  }
-	}
-rm(wd_workcomp, wd_laptop)
+wd_worklaptop <- "C:\\Users\\kristin\\Documents\\KDEs"
+if (file.exists(wd_workcomp)) {setwd(wd_workcomp)
+} else {
+  if(file.exists(wd_laptop)) {setwd(wd_laptop)
+  } else {
+    setwd(wd_worklaptop)
+  }
+}
+rm(wd_workcomp, wd_laptop, wd_worklaptop)
 
 ##LOAD PACKAGES
 # may not need all of these
@@ -32,14 +31,14 @@ rm(wd_workcomp, wd_laptop)
   latlong = CRS("+init=epsg:4326")
   
 ##COLLAR DATA
-elk <- read.csv("../ElkDatabase/collardata-locsonly-equalsampling.csv", as.is = TRUE, header = TRUE)
+elk <- read.csv("../DatabasesEtc/collardata-locsonly-equalsampling.csv", as.is = TRUE, header = TRUE)
 elk$Date <- as.Date(elk$Date, "%Y-%m-%d")
 
 ##SEASONAL KDES BY SEX
 
 # AnimalID by DeviceID
-unique(elk[elk$DeviceID == 34914, 1])
-indiv <- subset(elk, AnimalID == 140380) 
+unique(elk[elk$DeviceID == 34909, 1])
+indiv <- subset(elk, AnimalID == 140290) 
 xy <- data.frame("x"=indiv$Long,"y"=indiv$Lat)
 ll <- SpatialPointsDataFrame(xy, indiv, proj4string = latlong)
 
@@ -47,7 +46,7 @@ ll <- SpatialPointsDataFrame(xy, indiv, proj4string = latlong)
 
 kde <- kernelUD(ll, h="href", grid = 5000)
 raster <- raster(kde)
-writeRaster(raster, paste("KDE140380"), format="GTiff", overwrite=TRUE)
+writeRaster(raster, paste("KDE140290"), format="GTiff", overwrite=TRUE)
 
 
 ##SEASONAL KDES FOR PRESENTATION EXAMPLE
